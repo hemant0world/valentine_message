@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine ❤️</title>
+
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Comic Sans MS', cursive;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .card {
+    background: white;
+    padding: 50px 30px;
+    border-radius: 30px;
+    width: 90%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.3);
+  }
+
+  h1 {
+    color: #ff3f6c;
+    font-size: 2.2rem;
+    margin-bottom: 50px;
+  }
+
+  /* YES & NO ROW */
+  .btn-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  button {
+    padding: 18px 40px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  #yesBtn {
+    background: #ff3f6c;
+    color: white;
+  }
+
+  #noBtn {
+    background: #e0e0e0;
+    position: relative;
+  }
+
+  /* Floating tease message */
+  .tease {
+    position: fixed;
+    background: white;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    color: #ff3f6c;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  /* Celebration */
+  .celebrate {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    animation: fadeIn 1s ease;
+  }
+
+  .celebrate h2 {
+    font-size: 2.6rem;
+  }
+
+  .celebrate p {
+    font-size: 1.4rem;
+    color: #ffd6e0;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .confetti {
+    position: absolute;
+    font-size: 1.8rem;
+    animation: blast 3s linear forwards;
+  }
+
+  @keyframes blast {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-100vh); opacity: 0; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="card" id="mainCard">
+  <h1>Will you be my Valentine Aakrity ji? 💖</h1>
+
+  <div class="btn-row">
+    <button id="yesBtn">YES 💘</button>
+    <button id="noBtn">NO 🙈</button>
+  </div>
+</div>
+
+<div class="tease" id="teaseMsg"></div>
+
+<div class="celebrate hidden" id="celebration">
+  <h2>🎆 Thank You ❤️ 🎆</h2>
+  <p>
+    Now you’re officially mine, my love Mona Darling ❤️<br><br>
+    And since you said YES… be ready for something special on the 14th 💕✨
+  </p>
+</div>
+
+
+<script>
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+  const tease = document.getElementById("teaseMsg");
+  const mainCard = document.getElementById("mainCard");
+  const celebration = document.getElementById("celebration");
+
+  const messages = [
+    "Are you sure? 😭",
+    "Please don’t say no 💔",
+    "That hurts 😢",
+    "Think again 🥺",
+    "You can’t escape love 😭"
+  ];
+
+  function escapeNo(e) {
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 120);
+
+    noBtn.style.position = "fixed";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    const msg = messages[Math.floor(Math.random() * messages.length)];
+    tease.innerText = msg;
+    tease.style.left = (x + 10) + "px";
+    tease.style.top = (y - 40) + "px";
+    tease.style.opacity = 1;
+
+    setTimeout(() => tease.style.opacity = 0, 900);
+  }
+
+  // Desktop + Mobile
+  noBtn.addEventListener("mouseover", escapeNo);
+  noBtn.addEventListener("touchstart", escapeNo);
+  noBtn.addEventListener("click", escapeNo);
+
+  yesBtn.addEventListener("click", () => {
+    mainCard.classList.add("hidden");
+    celebration.classList.remove("hidden");
+    fireCrackers();
+  });
+
+  function fireCrackers() {
+    const emojis = ["💖","🎉","✨","💘","🎆"];
+    setInterval(() => {
+      const c = document.createElement("div");
+      c.className = "confetti";
+      c.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+      c.style.left = Math.random() * 100 + "vw";
+      c.style.bottom = "0";
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 3000);
+    }, 180);
+  }
+</script>
+
+</body>
+</html>
